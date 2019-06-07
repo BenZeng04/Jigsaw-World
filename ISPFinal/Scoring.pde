@@ -10,12 +10,20 @@ void saveScore() // Method for saving the scores
   background(thumbnails[puzzleType - 1]);
   tint(225, 225);
   imageMode(CORNERS);
-  image(gameBG, 0, 0, width, height);
+  if(puzzleType <= 3)
+  {
+    image(gameBG, 0, 0, width, height);
+    logoColour = #59B7E8;
+  }
+  else
+  {
+    image(bonusBG, 0, 0, width, height);
+    logoColour = #D700F5;
+  }
   noTint();
   
   // Logo
   logoY = 145;
-  logoColour = #59B7E8;
   logoTitle = "V I C T O R I O U S!";
   logo();
   
@@ -96,24 +104,39 @@ void finishScreen() // Win Screen
   background(thumbnails[puzzleType - 1]);
   tint(225, 225);
   imageMode(CORNERS);
-  image(gameBG, 0, 0, width, height);
+  if(puzzleType <= 3)
+  {
+    image(gameBG, 0, 0, width, height);
+    logoColour = #59B7E8;
+  }
+  else
+  {
+    image(bonusBG, 0, 0, width, height);
+    logoColour = #D700F5;
+  }
   
   noTint();
   // Logo
   logoY = 145;
-  logoColour = #59B7E8;
   logoTitle = "V I C T O R I O U S!";
   logo();
   
   // Side Rectangles, where scoring information is displayed
   rectMode(CORNERS);
-  fill(#4E6776);
+  strokeWeight(8);
+  noFill();
+  // Shadow
+  stroke(100, 180);
+  rect(60 + shadowOffset, 325 + shadowOffset, 300 + shadowOffset, 680 + shadowOffset);
+  rect(width - 60 + shadowOffset, 325 + shadowOffset, width - 300 + shadowOffset, 680 + shadowOffset);
+  // Real
+  stroke(255);
   rect(60, 325, 300, 680);
   rect(width - 60, 325, width - 300, 680);
   
   // Decoration
   imageMode(CENTER);
-  image(win, width - 180, 502, 150, 300);
+  image(win, width - 180, 510, 225, 190);
   
   fill(#3C90CE);
   rectMode(CENTER);
@@ -167,13 +190,27 @@ void finishScreen() // Win Screen
     text("SAVE!", 500, 660);
   
   // Text for Scoring Information
-  fill(255);
-  textSize(30);
-  text("Score: "+currentScore, 180, 400);
   
   int timeUsed = 60 * 120 - timeLeft;
   int minsLeft = timeUsed / 3600;
   int secsLeft = timeUsed / 60 - (minsLeft * 60);
+  
+  textSize(30);
+  // Shadow
+  fill(100, 180);
+  text("Score: "+currentScore, 180 + shadowOffset, 400 + shadowOffset);
+  
+  if(secsLeft >= 10)
+    text("Time Used: "+minsLeft+":"+secsLeft, 180 + shadowOffset, 500 + shadowOffset);
+  else
+  text("Time Used: "+minsLeft+":0"+secsLeft, 180 + shadowOffset, 500 + shadowOffset);
+  
+  text("Correct Pieces:", 180 + shadowOffset, 600 + shadowOffset);
+  text(rightSpots, 180 + shadowOffset, 650 + shadowOffset);
+  
+  // Real
+  fill(255);
+  text("Score: "+currentScore, 180, 400);
   
   if(secsLeft >= 10)
     text("Time Used: "+minsLeft+":"+secsLeft, 180, 500);
@@ -190,17 +227,33 @@ void failScreen() // Defeat Screen
   background(thumbnails[puzzleType - 1]);
   tint(225, 225);
   imageMode(CORNERS);
-  image(gameBG, 0, 0, width, height);
+  if(puzzleType <= 3)
+  {
+    image(gameBG, 0, 0, width, height);
+    logoColour = #59B7E8;
+  }
+  else
+  {
+    image(bonusBG, 0, 0, width, height);
+    logoColour = #D700F5;
+  }
   
   noTint();
   // Logo
   logoY = 145;
-  logoColour = #59B7E8;
   logoTitle = "D E F E A T E D!";
   logo();
   
+  // Side Rectangles, where scoring information is displayed
   rectMode(CORNERS);
-  fill(#4E6776);
+  strokeWeight(8);
+  noFill();
+  // Shadow
+  stroke(100, 180);
+  rect(60 + shadowOffset, 325 + shadowOffset, 300 + shadowOffset, 680 + shadowOffset);
+  rect(width - 60 + shadowOffset, 325 + shadowOffset, width - 300 + shadowOffset, 680 + shadowOffset);
+  // Real
+  stroke(255);
   rect(60, 325, 300, 680);
   rect(width - 60, 325, width - 300, 680);
   
@@ -242,14 +295,27 @@ void failScreen() // Defeat Screen
   text("RETRY!", 500, 570);
   
   // Scoring Information Text
-  fill(255);
-  textSize(30);
-  text("Score: "+currentScore, 180, 400);
   
   int timeUsed = 60 * 120 - timeLeft;
   int minsLeft = timeUsed / 3600;
   int secsLeft = timeUsed / 60 - (minsLeft * 60);
   
+  textSize(30);
+  // Shadow
+  fill(100, 180);
+  text("Score: "+currentScore, 180 + shadowOffset, 400 + shadowOffset);
+  
+  if(secsLeft >= 10)
+    text("Time Used: "+minsLeft+":"+secsLeft, 180 + shadowOffset, 500 + shadowOffset);
+  else
+  text("Time Used: "+minsLeft+":0"+secsLeft, 180 + shadowOffset, 500 + shadowOffset);
+  
+  text("Correct Pieces:", 180 + shadowOffset, 600 + shadowOffset);
+  text(rightSpots, 180 + shadowOffset, 650 + shadowOffset);
+  // Real
+  fill(255);
+  text("Score: "+currentScore, 180, 400);
+
   if(secsLeft >= 10)
     text("Time Used: "+minsLeft+":"+secsLeft, 180, 500);
   else

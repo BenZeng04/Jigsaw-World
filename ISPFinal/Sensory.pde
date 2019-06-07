@@ -248,22 +248,28 @@ void mousePressed() // All mouse input, depending on the mode. Generally for tra
             {
               third = second;
               thirdUsername = secondUsername;
+              thirdPuzzle = secondPuzzle;
               second = best;
               secondUsername = bestUsername;
+              secondPuzzle = bestPuzzle;
               best = currentScore;
               bestUsername = username;
+              bestPuzzle = puzzleType;
             }
             else if(currentScore > second)
             {
               third = second;
               thirdUsername = secondUsername;
+              thirdPuzzle = secondPuzzle;
               second = currentScore;
               secondUsername = username;
+              secondPuzzle = puzzleType;
             }
             else if(currentScore > third)
             {
               third = currentScore;
               thirdUsername = username;
+              thirdPuzzle = puzzleType;
             }
             scoreSaved = true;
           }

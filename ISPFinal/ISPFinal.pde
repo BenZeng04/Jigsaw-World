@@ -4,7 +4,9 @@ Ben Zeng
 ISPFinal
 Ms. Basaraba
 This program is a simple jigsaw puzzle game which offers eight different jigsaw puzzles for the user to pick between to try to complete.
-There are three main puzzles and five bonus puzzles that I decided to add as a bonus, since this is the final draft.
+
+There are three main puzzles which were brought over from previous drafts, and five bonus puzzles that I decided to add as a BONUS, since this is the final draft.
+
 If they complete the puzzle within the time limit, their scores are saved and they can keep trying until they quit.
 */
 
@@ -24,9 +26,9 @@ int transitionToMode; // A variable used for the transitions. It allows for the 
 List of Modes:
 -1 - Loading 
 0 - Main Menu 
-1 - Rules
+1 - Rules //<>//
 2 - Scores
-3 - Are you sure you want to quit?  //<>//
+3 - Are you sure you want to quit? 
 4 - Goodbye
 5 - Puzzle Selection
 6 - Gameplay 
@@ -56,9 +58,9 @@ void setup()
   bonusBG = loadImage("BonusBG.png");
   bonusBG.resize(1000, 750);
   for(int i = 0; i < 8; i++)
-  {
+  { //<>//
     thumbnails[i] = loadImage("Puzzle"+(i+1)+".jpg");
-  } //<>//
+  }
 }
 
 void draw()

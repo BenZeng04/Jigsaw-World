@@ -13,7 +13,8 @@ If you want to see how the additional bonus puzzles look like, modify this so to
 // Main Menu Global Variables
 
 int best = 0, second = 0, third = 0; // Best scores
-String bestUsername = "None Yet!", secondUsername = "None Yet!", thirdUsername = "None Yet!";
+int bestPuzzle = 0, secondPuzzle = 0, thirdPuzzle = 0; // Puzzles that the scores were set on
+String bestUsername = "", secondUsername = "", thirdUsername = "";
 // Highscore Global Variables
 
 int countdown;
@@ -185,15 +186,6 @@ void instructions() // Instructions Menu
   textFont(Segoe);
   textSize(30);
   
-  // Box Outline for Rules
-  strokeWeight(4);
-  rectMode(CORNER);
-  fill(#FA740D, 220); 
-  stroke(100, 180);
-  rect(90 + shadowOffset, 380 + shadowOffset, textWidth("To Play, Drag the puzzle pieces into the rectangle in the middle.") + 20, 200); // Shadow
-  stroke(255);
-  rect(90, 380, textWidth("To Play, Drag the puzzle pieces into the rectangle in the middle.") + 20, 200); // Real Box
-  
   // Shadow Text
   fill(100, 180);
   textAlign(LEFT, CENTER);
@@ -285,21 +277,42 @@ void highscores()
   textSize(48);
   textFont(Agency);
   
-  fill(100, 180); // Shadow Text
-  text("Best Score: "+best+" by "+bestUsername, 500 + shadowOffset, 330 + shadowOffset); 
-  text("Second Best Score: "+second+" by "+secondUsername, 500 + shadowOffset, 430 + shadowOffset); 
-  text("Third Best Score: "+third+" by "+thirdUsername, 500 + shadowOffset, 530 + shadowOffset); 
-  
-  fill(#FF8629); // Real Text
-  text("Best Score: "+best+" by "+bestUsername, 500, 330); 
-  text("Second Best Score: "+second+" by "+secondUsername, 500, 430); 
-  text("Third Best Score: "+third+" by "+thirdUsername, 500, 530); 
+  if(best != 0) // If a score has been set
+  {
+    fill(100, 180); // Shadow Text
+    text(bestUsername + " | " + best + " Points" + " | Puzzle " + bestPuzzle, 500 + shadowOffset, 330 + shadowOffset); 
+    
+    fill(255); // Real Text
+    text(bestUsername + " | " + best + " Points" + " | Puzzle " + bestPuzzle, 500, 330);
+  }
+  else
+  {
+    fill(100, 180); // Shadow Text
+    text("No scores have been set yet!", 500 + shadowOffset, 430 + shadowOffset); 
+    
+    fill(255); // Real Text
+    text("No scores have been set yet!", 500, 430);
+  }
+  if(second != 0) 
+  {
+    fill(100, 180); // Shadow Text
+    text(secondUsername + " | " + second + " Points" + " | Puzzle " + secondPuzzle, 500 + shadowOffset, 430 + shadowOffset); 
+    
+    fill(255); // Real Text
+    text(secondUsername + " | " + second + " Points" + " | Puzzle " + secondPuzzle, 500, 430); 
+  }
+  if(third != 0)
+  {
+    fill(100, 180); // Shadow Text
+    text(thirdUsername + " | " + third + " Points" + " | Puzzle " + thirdPuzzle, 500 + shadowOffset, 530 + shadowOffset); 
+    
+    fill(255); // Real Text
+    text(thirdUsername + " | " + third + " Points" + " | Puzzle " + thirdPuzzle, 500, 530); 
+  }
   
   // Decoration
   imageMode(CENTER);
   image(decoration, 500, 670, 100, 100);
-  image(win, 100, 500, 130, 260);
-  image(win, width - 100, 500, 130, 260);
   
   // Back button
   textAlign(CENTER, CENTER);

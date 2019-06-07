@@ -78,13 +78,21 @@ void playDeco() // Gameplay decoration
   int minsLeft = timeLeft / 3600;
   int secsLeft = timeLeft / 60 - (minsLeft * 60);
   
-  background(gameBG);
+  if(puzzleType <= 3)
+  {
+    background(gameBG);
+    logoColour = #59B7E8;
+  }
+  else
+  {
+    background(bonusBG);
+    logoColour = #D700F5;
+  }
   
   // Title and Logo
   pushMatrix();
   scale(0.5);
   logoY = 145;
-  logoColour = #59B7E8;
   logoTitle = "J I G S A W  W O R L D";
   logo();
   popMatrix();
@@ -139,7 +147,7 @@ void playDeco() // Gameplay decoration
   rect(width - 200 + shadowOffset, 80 + shadowOffset, 120, 30); // Shadow
   
   stroke(255);
-  fill(#3C90CE);
+  fill(logoColour);
   rect(width - 200, 80, 120, 30); // Real
   
   fill(255);
@@ -147,4 +155,4 @@ void playDeco() // Gameplay decoration
     text("Time: "+minsLeft+":"+secsLeft, width - 200, 80);
   else
   text("Time: "+minsLeft+":0"+secsLeft, width - 200, 80);
-}
+} 

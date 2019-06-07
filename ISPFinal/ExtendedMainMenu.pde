@@ -39,11 +39,10 @@ void selectPuzzle() // Selecing 3 different puzzles
       
     rect(230 + 270 * i, 420, 250, 200); // Real Button
     
-    stroke(100, 180);
+    noStroke();    
     fill(100, 180);
     rect(230 + 270 * i + shadowOffset, 420 + shadowOffset, 225, 180); // Rectangular Shadow for Image
-    
-    noStroke();    
+   
     imageMode(CENTER);
     image(thumbnails[i], 230 + 270 * i, 420, 225, 180); // Image / Thumbnail inside each button
     
@@ -136,15 +135,19 @@ void morePuzzles() // Selecting Bonus 5 puzzles
 
     rect(200 * i - 500, 420, 190, 154); // Real buttons
     
-    // Button Thumbnails
+    noStroke();
+    fill(100, 180);
+    rect(200 * i - 500 + shadowOffset, 420 + shadowOffset, 180, 144); // Rectangular Shadow for Image
+    
     imageMode(CENTER);
-    image(thumbnails[i], 200 * i - 500, 420, 180, 144);
+    image(thumbnails[i], 200 * i - 500, 420, 180, 144); // Thumbnail for buttons
+    
     if(completed[i])
-      image(check, 200 * i - 500, 450, 75, 75);
+      image(check, 200 * i - 500, 450, 75, 75); // Checkmark if completed
     
     noStroke();
     fill(#A0C5FF, 240);
-    rect(200 * i - 500, 390, 165, 40);
+    rect(200 * i - 500, 390, 165, 40); // Icon for score multipliers
   }
   
   // Score Multipliers
