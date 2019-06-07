@@ -235,7 +235,7 @@ void mousePressed() // All mouse input, depending on the mode. Generally for tra
         if (mouseButton == LEFT && mouseX > 350 && mouseX < 650 && mouseY > 525 && mouseY < 675) // Username Saving
         {
           textSize(36);
-          if(username.length() > 0 && textWidth(username) <= width) // Makes sure that the username is valid! (Cannot be blank, cannot be way too long)
+          if(username.length() > 0 && textWidth(username) <= 500) // Makes sure that the username is valid! (Cannot be blank, cannot be way too long)
           {
             username = username.trim(); // Trims unneccesary spaces
             // Transitioning back to the victory screen

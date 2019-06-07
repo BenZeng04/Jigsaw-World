@@ -51,17 +51,9 @@ void play() // Gameplay logic
   
   for(int i = 0; i < 20; i++) // Checks if puzzle is finished
   {
-    if(x[i] > 250 && x[i] < 750 && y[i] > 175 && y[i] < 575 && !(mousePressed && mouseButton == LEFT)) // Makes sure everything is in the grid. Otherwise, the assigned grid balue may be inaccurate
+    if(x[i] != (i % 5) * 100 + 300 || y[i] != (i / 5) * 100 + 225 || pieceSelected == i) // Checks if the piece is in the right position and the piece isn't being selected. If it is, then the puzzle is not complete.
     {
-      if((x[i] - 300) / 100 + 5 * (y[i] - 225) / 100 != i) // Assigns a specific grid value to each place on the 1000 by 750 playfield, using x and y positions. If this specific grid value is equal to the array index, then it is in the right spot.
-      {
-        finished = false; 
-        rightSpots--;
-      }
-    }
-    else
-    {
-      finished = false;
+      finished = false; 
       rightSpots--;
     }
   }

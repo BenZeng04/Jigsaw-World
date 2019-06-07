@@ -4,18 +4,18 @@
 String username = "";
 boolean scoreSaved;
 
-void saveScore() 
+void saveScore() // Method for saving the scores
 {
   thumbnails[puzzleType - 1].resize(1000, 750);
   background(thumbnails[puzzleType - 1]);
   tint(225, 225);
   imageMode(CORNERS);
   image(gameBG, 0, 0, width, height);
-  
   noTint();
+  
   // Logo
   logoY = 145;
-  logoColour = #3C90CE;
+  logoColour = #59B7E8;
   logoTitle = "V I C T O R I O U S!";
   logo();
   
@@ -23,58 +23,66 @@ void saveScore()
   textFont(Agency);
   textSize(60);
   fill(100, 180);
-  text("Enter your username:", 500 + 2, 330 + 2);
+  text("Enter your username:", 500 + shadowOffset, 330 + shadowOffset); // Shadow
+  
   fill(#003486);
   text("Enter your username:", 500, 330); // Subtitle
 
+  // Displays currently typed username
   rectMode(CENTER);
   textFont(SegoeLight);
   textSize(36);
   float userLength = textWidth(username) + 100;
+    // Shadow
   fill(100, 180);
   stroke(100, 180);
-  rect(500 + 2, 430 + 2, userLength, 2);
-  text(username, 500 + 2, 410 + 2);
-  fill(0);
+  rect(500 + shadowOffset, 430 + shadowOffset, userLength, 2); // Underline
+  text(username, 500 + shadowOffset, 410 + shadowOffset); // Text
+    // Real Text
+  fill(255);
   stroke(255);
-  rect(500, 430, userLength, 2);
-  text(username, 500, 410);
+  rect(500, 430, userLength, 2); // Underline
+  text(username, 500, 410); // Text
   
+  // Button
   noFill();
-  stroke(100, 180);
-  rect(500 + 5, 600 + 5, 300, 150, 20, 20, 20, 20);
   strokeWeight(7);
+  stroke(100, 180);
+  rect(500 + shadowOffset, 600 + shadowOffset, 300, 150, 20, 20, 20, 20); // Shadow
+  
   if (mouseX > 350 && mouseX < 650 && mouseY > 525 && mouseY < 675) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 600, 300, 150, 20, 20, 20, 20);
+    
+  rect(500, 600, 300, 150, 20, 20, 20, 20); // Real
  
-  if(textWidth(username) > width)
+  if(textWidth(username) > 500) // Different messages can show up depending on what your username is.
   {
     textSize(30);
     fill(100, 180);
-    text("Username Too Long!", 500 + 5, 600 + 5);
+    text("Username Too Long!", 500 + shadowOffset, 600 + shadowOffset); // Shadow
     fill(255);
-    text("Username Too Long!", 500, 600);
+    text("Username Too Long!", 500, 600); // Real
   }
   else if(username.length() > 0)
   {
     textSize(60);
     fill(100, 180);
-    text("SAVE!", 500 + 5, 600 + 5);
+    text("SAVE!", 500 + shadowOffset, 600 + shadowOffset); // Shadow
     fill(255);
-    text("SAVE!", 500, 600);
-  }
+    text("SAVE!", 500, 600); // Real
+  } 
   else 
   {
     textSize(38);
     fill(100, 180);
-    text("Type Something!", 500 + 5, 600 + 5);
+    text("Type Something!", 500 + shadowOffset, 600 + shadowOffset); // Shadow
     fill(255);
-    text("Type Something!", 500, 600);
+    text("Type Something!", 500, 600); // Real
   }
-    
+  
+  // Decoration
   noStroke();
   rectMode(CORNERS);
   fill(#0F326A);
@@ -82,7 +90,7 @@ void saveScore()
   rect(width - 320, 500, width - 330, 700);
 } 
 
-void finishScreen()
+void finishScreen() // Win Screen
 {
   thumbnails[puzzleType - 1].resize(1000, 750);
   background(thumbnails[puzzleType - 1]);
@@ -93,15 +101,17 @@ void finishScreen()
   noTint();
   // Logo
   logoY = 145;
-  logoColour = #3C90CE;
+  logoColour = #59B7E8;
   logoTitle = "V I C T O R I O U S!";
   logo();
   
+  // Side Rectangles, where scoring information is displayed
   rectMode(CORNERS);
   fill(#4E6776);
   rect(60, 325, 300, 680);
   rect(width - 60, 325, width - 300, 680);
   
+  // Decoration
   imageMode(CENTER);
   image(win, width - 180, 502, 150, 300);
   
@@ -109,48 +119,54 @@ void finishScreen()
   rectMode(CENTER);
   strokeWeight(7);
   noFill();
+  // Shadows for Buttons
   stroke(100, 180);
-  rect(500 + 5, 660 + 5, 280, 130, 10, 10, 10, 10);
-  rect(500 + 5, 360 + 5, 280, 130, 10, 10, 10, 10);
-  rect(500 + 5, 510 + 5, 280, 130, 10, 10, 10, 10);
+  rect(500 + shadowOffset, 660 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  rect(500 + shadowOffset, 360 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  rect(500 + shadowOffset, 510 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  
+  // Real Buttons
   if (mouseX > 360 && mouseX < 640 && mouseY > 295 && mouseY < 425) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 360, 280, 130, 10, 10, 10, 10);
+  rect(500, 360, 280, 130, 20, 20, 20, 20);
+  
   if (mouseX > 360 && mouseX < 640 && mouseY > 445 && mouseY < 575) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 510, 280, 130, 10, 10, 10, 10);
+  rect(500, 510, 280, 130, 20, 20, 20, 20);
+  
   if (mouseX > 360 && mouseX < 640 && mouseY > 595 && mouseY < 725) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 660, 280, 130, 10, 10, 10, 10);
+  rect(500, 660, 280, 130, 20, 20, 20, 20);
   
   // Text for buttons
   textAlign(CENTER, CENTER);
   textFont(Segoe);
   textSize(60);
+  // Shadows
   fill(100, 180);
-  text("Back!", 500 + 5, 360 + 5);
-  text("Retry!", 500 + 5, 510 + 5);
-  
+  text("BACK!", 500 + shadowOffset, 360 + shadowOffset);
+  text("RETRY!", 500 + shadowOffset, 510 + shadowOffset);
   if(scoreSaved)
-    text("Saved!", 505, 665);
+    text("SAVED!", 500 + shadowOffset, 660 + shadowOffset);
   else
-    text("Save!", 505, 665);
-   
+    text("SAVE!", 500 + shadowOffset, 660 + shadowOffset);
+    
+  // Real Text
   fill(255);
-  text("Back!", 500, 360);
-  text("Retry!", 500, 510);
-  
+  text("BACK!", 500, 360);
+  text("RETRY!", 500, 510);
   if(scoreSaved)
-    text("Saved!", 500, 660);
+    text("SAVED!", 500, 660);
   else
-    text("Save!", 500, 660);
+    text("SAVE!", 500, 660);
   
+  // Text for Scoring Information
   fill(255);
   textSize(30);
   text("Score: "+currentScore, 180, 400);
@@ -168,7 +184,7 @@ void finishScreen()
   text(rightSpots, 180, 650);
 }
 
-void failScreen()
+void failScreen() // Defeat Screen
 {
   thumbnails[puzzleType - 1].resize(1000, 750);
   background(thumbnails[puzzleType - 1]);
@@ -179,7 +195,7 @@ void failScreen()
   noTint();
   // Logo
   logoY = 145;
-  logoColour = #3C90CE;
+  logoColour = #59B7E8;
   logoTitle = "D E F E A T E D!";
   logo();
   
@@ -194,31 +210,38 @@ void failScreen()
   noFill();
   rectMode(CENTER);
   strokeWeight(7);
+  // Shadow for Text
   stroke(100, 180);
-  rect(500 + 5, 570 + 5, 280, 130, 10, 10, 10, 10);
-  rect(500 + 5, 420 + 5, 280, 130, 10, 10, 10, 10);
+  rect(500 + shadowOffset, 570 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  rect(500 + shadowOffset, 420 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  
+  // Actual Buttons
   if (mouseX > 360 && mouseX < 640 && mouseY > 355 && mouseY < 485) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 420, 280, 130, 10, 10, 10, 10);
+  rect(500, 420, 280, 130, 20, 20, 20, 20);
+  
   if (mouseX > 360 && mouseX < 640 && mouseY > 505 && mouseY < 635) // Highlights the button if mouse is hovering over it
     stroke(#36C6FC, 150);
   else 
     stroke(255);
-  rect(500, 570, 280, 130, 10, 10, 10, 10);
+  rect(500, 570, 280, 130, 20, 20, 20, 20);
   
   // Text for buttons
   textAlign(CENTER, CENTER);
   textFont(Segoe);
   textSize(60);
+  // Shadow
   fill(100, 180);
-  text("Back!", 500 + 5, 420 + 5);
-  text("Retry!", 500 + 5, 570 + 5);
+  text("BACK!", 500 + shadowOffset, 420 + shadowOffset);
+  text("RETRY!", 500 + shadowOffset, 570 + shadowOffset);
+  // Real
   fill(255);
-  text("Back!", 500, 420);
-  text("Retry!", 500, 570);
+  text("BACK!", 500, 420);
+  text("RETRY!", 500, 570);
   
+  // Scoring Information Text
   fill(255);
   textSize(30);
   text("Score: "+currentScore, 180, 400);

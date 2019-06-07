@@ -5,18 +5,16 @@ float loadingScreenAnimate = 600; // This variable is used to help with animatin
 
 PImage decoration;
 PImage menuBG;
-int totalScore = 0; // Total Score accululated throughout a session. Score is added even if it isn't saved to the leaderboard.
+int totalScore = 0; // Total Score accululated throughout a session. Score is added even if it isn't saved to the leaderboard. 
+/*
+NOTE: 
+If you want to see how the additional bonus puzzles look like, modify this so totalScore > 10000. This way, you start off with 10000 points and you can see the extra screen.
+*/
 // Main Menu Global Variables
 
-int best = 0, second = 0, third = 0; // UNUSED AS OF FIRST DRAFT
+int best = 0, second = 0, third = 0; // Best scores
 String bestUsername = "None Yet!", secondUsername = "None Yet!", thirdUsername = "None Yet!";
 // Highscore Global Variables
-
-PImage [] thumbnails = new PImage [8];
-boolean [] completed = {false, false, false, false, false, false, false, false};
-PImage check;
-int puzzleType = 4; // Which puzzle, out of the puzzles are being used
-// Puzzle Selection Global Variables
 
 int countdown;
 PImage smile;
@@ -55,7 +53,6 @@ void loadingScreen() // Loading screen
 
 void mainMenu() // Main menu with the main actions  
 {
-  int shadowOffset = 5;
   int buttonOffset = 140; // A constant value for the spacing between buttons.
   
   // Title and Logo
@@ -74,48 +71,65 @@ void mainMenu() // Main menu with the main actions
   noFill();
   strokeWeight(5);
   rectMode(CORNER);
-  stroke(100, 180); // Shadow
-  rect(360 + shadowOffset, 300 + shadowOffset, 280, 130, 10, 10, 10, 10);
-  rect(360 + shadowOffset, 300 + buttonOffset + shadowOffset, 280, 130, 10, 10, 10, 10);
-  rect(360 + shadowOffset, 300 + 2 * buttonOffset + shadowOffset, 280, 130, 10, 10, 10, 10);
   
-  if (mouseX > 360 && mouseX < 640 && mouseY > 300 && mouseY < 430 && mode == 0) // Highlights the button if mouse is hovering over it
-    stroke(#FFC60A, 150);
-  else
-    stroke(255);
-  rect(360, 300, 280, 130, 10, 10, 10, 10); // Real buttons
-  if (mouseX > 360 && mouseX < 640 && mouseY > 300 + buttonOffset && mouseY < 430 + buttonOffset && mode == 0) // Highlights the button if mouse is hovering over it
-    stroke(#FFC60A, 150);
-  else
-    stroke(255);
-  rect(360, 300 + buttonOffset, 280, 130, 10, 10, 10, 10);
-  if (mouseX > 360 && mouseX < 640 && mouseY > 300 + 2 * buttonOffset && mouseY < 430 + 2 * buttonOffset && mode == 0) // Highlights the button if mouse is hovering over it
-    stroke(#FFC60A, 150);
-  else
-    stroke(255);
-  rect(360, 300 + 2 * buttonOffset, 280, 130, 10, 10, 10, 10); 
+  // Shadow Buttons
+  stroke(100, 180); 
+  rect(360 + shadowOffset, 300 + shadowOffset, 280, 130, 20, 20, 20, 20);
+  rect(360 + shadowOffset, 300 + buttonOffset + shadowOffset, 280, 130, 20, 20, 20, 20);
+  rect(360 + shadowOffset, 300 + 2 * buttonOffset + shadowOffset, 280, 130, 20, 20, 20, 20);
   
-  fill(#FC4517);
-  noStroke();
-  ellipse(width - 60, height - 60, 100, 100);
+  // Real Buttons
+  if (mouseX > 360 && mouseX < 640 && mouseY > 300 && mouseY < 430 && mode == 0) // Highlights the button if mouse is hovering over button 1
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  rect(360, 300, 280, 130, 20, 20, 20, 20); 
+  
+  if (mouseX > 360 && mouseX < 640 && mouseY > 300 + buttonOffset && mouseY < 430 + buttonOffset && mode == 0) // Highlights the button if mouse is hovering over button 2
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  rect(360, 300 + buttonOffset, 280, 130, 20, 20, 20, 20);
+  
+  if (mouseX > 360 && mouseX < 640 && mouseY > 300 + 2 * buttonOffset && mouseY < 430 + 2 * buttonOffset && mode == 0) // Highlights the button if mouse is hovering over button 3
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  rect(360, 300 + 2 * buttonOffset, 280, 130, 20, 20, 20, 20); 
+  
+  // Back button
+  strokeWeight(8);
+  noFill();
+  stroke(100, 180);
+  ellipse(width - 60 + shadowOffset, height - 60 + shadowOffset, 100, 100); // Shadow
+  textSize(24);
+  fill(100, 180);
+  text("QUIT..", width - 60 + shadowOffset, height - 60 + shadowOffset);
+  
+  if(dist(mouseX, mouseY, width - 60, height - 60) < 50  && mode == 0) // Highlights Button
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  noFill();
+  ellipse(width - 60, height - 60, 100, 100); // Real
+  fill(255);
+  text("QUIT..", width - 60, height - 60);
+  
   // Text for buttons
-  
   textAlign(CENTER, CENTER);
   textFont(Segoe);
   textSize(60);
   
-  fill(100, 180);
+  fill(100, 180); // Shadow Text
   text("PLAY!", 500 + shadowOffset, 365 + shadowOffset);
   text("HELP!", 500 + shadowOffset, 365 + buttonOffset + shadowOffset);
   text("SCORES!", 500 + shadowOffset, 365 + 2 * buttonOffset + shadowOffset);
   
-  fill(255);
+  textSize(60);
+  fill(255); // Real Text
   text("PLAY!", 500, 365);
   text("HELP!", 500, 365 + buttonOffset);
   text("SCORES!", 500, 365 + 2 * buttonOffset);
-  textSize(24);
-  fill(255);
-  text("QUIT..", width - 60, height - 60);
 }
 
 void quitBox() // The "Are you sure you want to quit" prompt
@@ -127,6 +141,7 @@ void quitBox() // The "Are you sure you want to quit" prompt
   
   // Real dialog box and prompt
   fill(#272727, 220); 
+  noStroke();
   rectMode(CORNER);
   rect(0, 0, 1000, 750); // Large transparent screen
   fill(#FFFFFF);
@@ -136,7 +151,7 @@ void quitBox() // The "Are you sure you want to quit" prompt
   // Buttons
   fill(#B9B9B9);
   strokeWeight(2);
-  stroke(0);
+  stroke(255);
   rect(150, 500, 300, 75);
   rect(550, 500, 300, 75);
   
@@ -159,51 +174,84 @@ void instructions() // Instructions Menu
   textSize(48);
   textFont(Agency);
   textAlign(CENTER, CENTER);
+  
   fill(100, 180);
-  text("How To Play!", 500 + 5, 330 + 5);
+  text("How To Play!", 500 + shadowOffset, 330 + shadowOffset); // Shadow
+  
   fill(#FF8629);
   text("How To Play!", 500, 330); // Subtitle
   
   // Rules
-  fill(0);
+  textFont(Segoe);
+  textSize(30);
+  
+  // Box Outline for Rules
+  strokeWeight(4);
+  rectMode(CORNER);
+  fill(#FA740D, 220); 
+  stroke(100, 180);
+  rect(90 + shadowOffset, 380 + shadowOffset, textWidth("To Play, Drag the puzzle pieces into the rectangle in the middle.") + 20, 200); // Shadow
+  stroke(255);
+  rect(90, 380, textWidth("To Play, Drag the puzzle pieces into the rectangle in the middle.") + 20, 200); // Real Box
+  
+  // Shadow Text
+  fill(100, 180);
+  textAlign(LEFT, CENTER);
+  text("To Play, Drag the puzzle pieces into the rectangle in the middle.", 100 + shadowOffset, 400 + shadowOffset);
+  text("Once all the puzzle pieces are in the correct position, you WIN!", 100 + shadowOffset, 450 + shadowOffset);
+  text("The faster you finish, the more SCORE you get!", 100 + shadowOffset, 550 + shadowOffset);
+  textSize(45);
+  text("GOOD LUCK!!!!!!", 100 + shadowOffset, 650 + shadowOffset);
+  
+  // Real Text
+  fill(255);
   textFont(Segoe);
   textSize(30);
   textAlign(LEFT, CENTER);
   text("To Play, Drag the puzzle pieces into the rectangle in the middle.", 100, 400);
-  text("Once all the puzzle pieces are in the correct position, you ", 100, 450);
-  
-  float temporaryDist = textWidth("Once all the puzzle pieces are in the correct position, you "); // Temporary distance to help with the colour chance
-  
-  fill(#02D31C); // Green "WIN!!!" for emphasis
-  text("WIN!!!", 100 + temporaryDist, 450);
-  fill(0);
+  text("Once all the puzzle pieces are in the correct position, you WIN!", 100, 450);
   text("The faster you finish, the more SCORE you get!", 100, 550);
+  textSize(45);
   text("GOOD LUCK!!!!!!", 100, 650);
   
+  // Decoration
   imageMode(CENTER);
   image(decoration, 500, 670, 100, 100);
   
   // Back button
-  fill(#FC4517);
-  noStroke();
-  ellipse(width - 60, height - 60, 100, 100);
-  textSize(24);
-  fill(255);
+  strokeWeight(8);
   textAlign(CENTER, CENTER);
+  textFont(Segoe);
+  noFill();
+  stroke(100, 180);
+  ellipse(width - 60 + shadowOffset, height - 60 + shadowOffset, 100, 100); // Shadow
+  textSize(24);
+  fill(100, 180);
+  text("BACK..", width - 60 + shadowOffset, height - 60 + shadowOffset);
+  
+  if(dist(mouseX, mouseY, width - 60, height - 60) < 50) // Highlights Button
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  noFill();
+  ellipse(width - 60, height - 60, 100, 100); // Real
+  fill(255);
   text("BACK..", width - 60, height - 60);
 }
 
 void goodBye()
 {
   countdown--;
-  int timeLeft = ceil(countdown / 60);
+  int timeLeft = ceil(countdown / 60); // Countdown for when the program shuts down
   background(menuBG);
+  
   // Logo
   fill(255);
   logoY = 345;
   logoColour = #FFB624;
   logoTitle = "T H A N K S  F O R  P L A Y I N G!";
   logo();
+  
   // Jigsaw puzzle decorations
   imageMode(CENTER);
   image(decoration, width / 2, height - 120, 160, 160);
@@ -214,11 +262,12 @@ void goodBye()
   textAlign(CENTER, CENTER);
   textSize(75);
   fill(100, 180);
-  text("Stopping in: "+timeLeft, 500 + 5, 150 + 5); 
-  fill(255);
-  text("Stopping in: "+timeLeft, 500, 150); 
+  text("Stopping in: "+timeLeft, 500 + shadowOffset, 150 + shadowOffset); // Shadow Text
   
-  if(countdown == 0)
+  fill(255);
+  text("Stopping in: "+timeLeft, 500, 150); // Real Text
+  
+  if(countdown == 0) // Shuts off when done
   {
     exit();
     return;
@@ -236,109 +285,39 @@ void highscores()
   textSize(48);
   textFont(Agency);
   
-  fill(100, 180);
-  text("Best Score: "+best+" by "+bestUsername, 500 + 5, 330 + 5); 
-  text("Second Best Score: "+second+" by "+secondUsername, 500 + 5, 430 + 5); 
-  text("Third Best Score: "+third+" by "+thirdUsername, 500 + 5, 530 + 5); 
+  fill(100, 180); // Shadow Text
+  text("Best Score: "+best+" by "+bestUsername, 500 + shadowOffset, 330 + shadowOffset); 
+  text("Second Best Score: "+second+" by "+secondUsername, 500 + shadowOffset, 430 + shadowOffset); 
+  text("Third Best Score: "+third+" by "+thirdUsername, 500 + shadowOffset, 530 + shadowOffset); 
   
-  fill(#FF8629);
-  
+  fill(#FF8629); // Real Text
   text("Best Score: "+best+" by "+bestUsername, 500, 330); 
   text("Second Best Score: "+second+" by "+secondUsername, 500, 430); 
   text("Third Best Score: "+third+" by "+thirdUsername, 500, 530); 
   
+  // Decoration
   imageMode(CENTER);
   image(decoration, 500, 670, 100, 100);
   image(win, 100, 500, 130, 260);
   image(win, width - 100, 500, 130, 260);
   
   // Back button
-  fill(#FC4517);
-  noStroke();
-  textFont(Segoe);
-  ellipse(width - 60, height - 60, 100, 100);
-  textSize(24);
-  fill(255);
   textAlign(CENTER, CENTER);
-  text("BACK..", width - 60, height - 60);
-}
-
-void selectPuzzle() // Selecing 3 different puzzles
-{  
-  // Title and Logo
-  background(gameBG);
-  logoY = 145;
-  logoColour = #3C90CE;
-  logoTitle = "L E V E L  S E L E C T I O N";
-  logo();
-  
-  // Decoration
-  imageMode(CENTER);
-  image(decoration, 200, height - 120, 160, 160);
-  image(decoration, 800, height - 120, 160, 160);
-  
-  // Clickable buttons
-  for(int i = 0; i < 3; i ++)
-  {
-    strokeWeight(6);
-    stroke(100, 180);
-    noFill();
-    rect(230 + 270 * i + 5, 420 + 5, 250, 200);
-    if (mouseX > 105 + 270 * i && mouseX < 355 + 270 * i && mouseY > 320 && mouseY < 520) // Highlights the button if mouse is hovering over it
-      stroke(#36C6FC, 150);
-    else 
-      stroke(255);
-    rect(230 + 270 * i, 420, 250, 200);
-    
-    stroke(100, 180);
-    fill(100, 180);
-    rect(230 + 270 * i + 5, 420 + 5, 225, 180);
-    noStroke();    
-    imageMode(CENTER);
-    image(thumbnails[i], 230 + 270 * i, 420, 225, 180);
-    
-    if(completed[i])
-      image(check, 230 + 270 * i, 450, 100, 100);
-      
-    fill(#A0C5FF, 240);
-      rect(230 + 270 * i, 380, 205, 50);
-  }
-
-  textSize(30);
-  fill(255);
-  text("1x  S C O R E", 230, 380);
-  text("2x  S C O R E", 500, 380);
-  text("3x  S C O R E", 770, 380);
-  
-  fill(#FC4517);
-  noStroke();
-  ellipse(width - 60, height - 60, 100, 100);
+  textFont(Segoe);
+  strokeWeight(8);
+  noFill();
+  stroke(100, 180);
+  ellipse(width - 60 + shadowOffset, height - 60 + shadowOffset, 100, 100); // Shadow
   textSize(24);
+  fill(100, 180);
+  text("BACK..", width - 60 + shadowOffset, height - 60 + shadowOffset);
+  
+  if(dist(mouseX, mouseY, width - 60, height - 60) < 50) // Highlights Button
+    stroke(#FFC60A, 150);
+  else
+    stroke(255);
+  noFill();
+  ellipse(width - 60, height - 60, 100, 100); // Real
   fill(255);
   text("BACK..", width - 60, height - 60);
-  
-  if (mouseX > 400 && mouseX < 600 && mouseY > 575 && mouseY < 675) // Highlights the button if mouse is hovering over it
-  {
-    strokeWeight(10);
-    stroke(#8FA5FC, 150);
-  }
-  else 
-    noStroke();
-    
-  fill(100, 180);
-  rect(500 + 5, 625 + 5, 200, 100, 10, 10, 10, 10); // Bonus Puzzles
-  fill(#4B70FF);
-  rect(500, 625, 200, 100, 10, 10, 10, 10); // Bonus Puzzles
-  
-  fill(255);
-  if(totalScore >= 10000)
-  {
-    textSize(30);
-    text("More Puzzles!", 500, 625);
-  }
-  else
-  {
-    textSize(24);
-    text("Unlock at 10000 Score.", 500, 625, 200, 100);
-  }  
 }
